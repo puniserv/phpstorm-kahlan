@@ -1,0 +1,18 @@
+<idea-plugin>
+  <id>puniserv-phpstorm-kahlan</id>
+  <name>PHPStorm kahlan</name>
+  <version>0.0.1</version>
+  <vendor email="adam@puniserv.pl" url="#">Puniserv</vendor>
+  <depends>com.intellij.modules.lang</depends>
+  <idea-version since-build="173.0"/>
+  <extensions defaultExtensionNs="com.intellij">
+    <configurationType id="Kahlan" implementation="configuration.KahlanConfigurationType"/>
+    <programRunner implementation="programRunner.KahlanRunner"/>
+    <!--<completion.contributor implementationClass="asciisoup.phpstorm.phpspec.completion.SubjectContributor" id="phpspec_subject_contributor" language="PHP" order="FIRST"/>-->
+    <!--<php.typeProvider2 implementation="asciisoup.phpstorm.phpspec.references.SubjectTypeProvider"/>-->
+    <!--<fileTypeFactory implementation="asciisoup.phpstorm.phpspec.files.PhpSpecFileTypeFactory"/>-->
+    <!--<php.typeProvider2 implementation="asciisoup.phpstorm.phpspec.references.MatcherTypeProvider"/>-->
+
+
+  </extensions>
+</idea-plugin>
