@@ -1,1 +1,7 @@
-.idea
+/.idea
+/out
+*.jar
+.gradle
+*.swp
+*.swo
+*~
