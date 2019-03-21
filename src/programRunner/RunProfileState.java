@@ -55,12 +55,12 @@ public class RunProfileState extends CommandLineState {
     @Override
     protected ProcessHandler startProcess() throws ExecutionException {
         GeneralCommandLine commandLine = new GeneralCommandLine(
-                "php " + environment.getProject().getBaseDir().getCanonicalPath() + "/vendor/bin/kahlan.php"
+                environment.getProject().getBaseDir().getCanonicalPath() + "/protected/vendors/bin/kahlan"
         ); //project.getConfig().binaryPath()
 //        commandLine.addParameter("run");
 //        commandLine.addParameter("--config=phpspec.yml");
 //        commandLine.addParameter("--format=teamcity");
-        commandLine.setWorkDirectory(environment.getProject().getBaseDir().getCanonicalPath());
+        commandLine.setWorkDirectory(environment.getProject().getBaseDir().getCanonicalPath() + "/protected");
         processHandler = new OSProcessHandler(
                 commandLine
         );
