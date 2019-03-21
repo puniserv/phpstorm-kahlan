@@ -2,6 +2,7 @@ package programRunner;
 
 import com.intellij.execution.*;
 import com.intellij.execution.configurations.CommandLineState;
+import com.intellij.execution.configurations.ConfigurationPerRunnerSettings;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.execution.process.OSProcessHandler;
 import com.intellij.execution.process.ProcessHandler;
@@ -54,6 +55,7 @@ public class RunProfileState extends CommandLineState {
     @NotNull
     @Override
     protected ProcessHandler startProcess() throws ExecutionException {
+        ConfigurationPerRunnerSettings configurationSettings = environment.getConfigurationSettings();
         GeneralCommandLine commandLine = new GeneralCommandLine(
                 environment.getProject().getBaseDir().getCanonicalPath() + "/protected/vendors/bin/kahlan"
         ); //project.getConfig().binaryPath()
