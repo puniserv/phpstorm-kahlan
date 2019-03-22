@@ -10,7 +10,6 @@ import com.intellij.execution.runners.ProgramRunner;
 import com.intellij.execution.testframework.sm.SMTestRunnerConnectionUtil;
 import com.intellij.execution.testframework.sm.runner.SMTRunnerConsoleProperties;
 import com.intellij.execution.ui.ConsoleView;
-import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,45 +26,23 @@ public class RunProfileState extends CommandLineState {
         this.environment = environment;
     }
 
-    public static void runScript(String path, String... args) {
-        try {
-            String[] cmd = new String[args.length + 1];
-            cmd[0] = path;
-            int count = 0;
-            for (String s : args) {
-                cmd[++count] = args[count - 1];
-            }
-            Process process = Runtime.getRuntime().exec(cmd);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            try {
-                process.waitFor();
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage());
-            }
-            while (bufferedReader.ready()) {
-                System.out.println("Received from script: " + bufferedReader.readLine());
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            System.exit(1);
-        }
-    }
-
     @NotNull
     @Override
     protected ProcessHandler startProcess() throws ExecutionException {
-        GeneralCommandLine commandLine = new GeneralCommandLine(
-                "php " + environment.getProject().getBaseDir().getCanonicalPath() + "/vendor/bin/kahlan.php"
-        ); //project.getConfig().binaryPath()
-//        commandLine.addParameter("run");
-//        commandLine.addParameter("--config=phpspec.yml");
-//        commandLine.addParameter("--format=teamcity");
+        GeneralCommandLine commandLine = new GeneralCommandLine(getScriptPathByOS());
         commandLine.setWorkDirectory(environment.getProject().getBaseDir().getCanonicalPath());
         processHandler = new OSProcessHandler(
                 commandLine
         );
-//        runScript(environment.getProject().getBaseDir().getCanonicalPath() + "/vendor/bin/kahlan.bat");
         return processHandler;
+    }
+
+    @NotNull
+    private String getScriptPathByOS() throws ExecutionException {
+        if (System.getProperty("os.name").startsWith("Windows")) {
+            return environment.getProject().getBaseDir().getCanonicalPath() + "/vendor/bin/kahlan.bat";
+        }
+        throw new ExecutionException("Not supported");
     }
 
     @Override
