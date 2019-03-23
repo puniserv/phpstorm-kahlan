@@ -1,6 +1,7 @@
 package configuration;
 
 import com.intellij.execution.configurations.ConfigurationTypeBase;
+import provider.Icons;
 
 import javax.swing.*;
 
@@ -10,7 +11,7 @@ public class KahlanConfigurationType extends ConfigurationTypeBase {
                 "Kahlan",
                 "Kahlan",
                 "Kahlan tests and stuff",
-                new ImageIcon("META-INF/pluginIcon.svg")
+                Icons.MainIcon20
         );
         addFactory(new KahlanConfigurationFactory(this));
     }

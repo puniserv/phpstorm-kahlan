@@ -7,6 +7,6 @@ public class KahlanRunner extends BasicProgramRunner {
     @NotNull
     @Override
     public String getRunnerId() {
-        return "kahlanRunner";
+        return "KahlanRunner";
     }
 }

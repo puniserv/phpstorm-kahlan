@@ -8,6 +8,7 @@
   <extensions defaultExtensionNs="com.intellij">
     <configurationType id="Kahlan" implementation="configuration.KahlanConfigurationType"/>
     <programRunner implementation="programRunner.KahlanRunner"/>
+    <programRunner implementation="programRunner.DebugKahlanRunner"/>
     <!--<completion.contributor implementationClass="asciisoup.phpstorm.phpspec.completion.SubjectContributor" id="phpspec_subject_contributor" language="PHP" order="FIRST"/>-->
     <!--<php.typeProvider2 implementation="asciisoup.phpstorm.phpspec.references.SubjectTypeProvider"/>-->
     <!--<fileTypeFactory implementation="asciisoup.phpstorm.phpspec.files.PhpSpecFileTypeFactory"/>-->

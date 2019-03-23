@@ -14,8 +14,6 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import java.awt.*;
 
-
-import com.intellij.execution.configurations.RunConfiguration;
 import programRunner.RunProfileState;
 
 public class KahlanRunConfiguration extends RunConfigurationBase {
@@ -36,12 +34,12 @@ public class KahlanRunConfiguration extends RunConfigurationBase {
         return new SettingsEditor<com.intellij.execution.configurations.RunConfiguration>() {
             @Override
             protected void resetEditorFrom(com.intellij.execution.configurations.RunConfiguration s) {
-
+                int x = 1;
             }
 
             @Override
             protected void applyEditorTo(com.intellij.execution.configurations.RunConfiguration s) throws ConfigurationException {
-
+                int x = 1;
             }
 
             @NotNull
@@ -50,7 +48,17 @@ public class KahlanRunConfiguration extends RunConfigurationBase {
                 JLabel jLabel = new JLabel("There are no configuration settings for kahlan.");
                 FlowLayout flowLayout = new FlowLayout();
                 flowLayout.addLayoutComponent("label", jLabel);
-                return new JPanel(flowLayout);
+                JPanel jPanel = new JPanel(flowLayout);
+                jPanel.add(new JLabel("Kahlan Bin path. Default vendor/bin/kahlan"));
+                jPanel.add(getKahlanBinPathField());
+                return jPanel;
+            }
+
+            @NotNull
+            private JTextField getKahlanBinPathField() {
+                JTextField jTextField = new JTextField();
+                jTextField.setName("kahlanBinPath");
+                return jTextField;
             }
         };
     }

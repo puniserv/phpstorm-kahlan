@@ -2,6 +2,7 @@ package programRunner;
 
 import com.intellij.execution.*;
 import com.intellij.execution.configurations.CommandLineState;
+import com.intellij.execution.configurations.ConfigurationPerRunnerSettings;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.execution.process.OSProcessHandler;
 import com.intellij.execution.process.ProcessHandler;
@@ -13,8 +14,7 @@ import com.intellij.execution.ui.ConsoleView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.util.Objects;
 
 public class RunProfileState extends CommandLineState {
 
@@ -29,6 +29,7 @@ public class RunProfileState extends CommandLineState {
     @NotNull
     @Override
     protected ProcessHandler startProcess() throws ExecutionException {
+        ConfigurationPerRunnerSettings configurationSettings = environment.getConfigurationSettings();
         GeneralCommandLine commandLine = new GeneralCommandLine(getScriptPathByOS());
         commandLine.setWorkDirectory(environment.getProject().getBaseDir().getCanonicalPath());
         processHandler = new OSProcessHandler(
@@ -38,11 +39,13 @@ public class RunProfileState extends CommandLineState {
     }
 
     @NotNull
-    private String getScriptPathByOS() throws ExecutionException {
+    private String getScriptPathByOS() {
+        String canonicalPath = environment.getProject().getBaseDir().getCanonicalPath();
+        String vendorsBin = canonicalPath + "/vendor/bin/";
         if (System.getProperty("os.name").startsWith("Windows")) {
-            return environment.getProject().getBaseDir().getCanonicalPath() + "/vendor/bin/kahlan.bat";
+            return vendorsBin + "kahlan.bat";
         }
-        throw new ExecutionException("Not supported");
+        return  vendorsBin + "kahlan";
     }
 
     @Override
@@ -60,7 +63,7 @@ public class RunProfileState extends CommandLineState {
                 "kahlan",
                 processHandler,
                 new SMTRunnerConsoleProperties(
-                        environment.getRunnerAndConfigurationSettings().getConfiguration(),
+                        Objects.requireNonNull(environment.getRunnerAndConfigurationSettings()).getConfiguration(),
                         "kahlan",
                         environment.getExecutor()
                 )
